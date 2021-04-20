@@ -6,8 +6,8 @@ public class GridGenerator : MonoBehaviour
 {
     public int[,] Grid;
     public Sprite sprite;
-    public int Columns = 100;
-    public int Rows = 100;
+    public int Columns = 500;
+    public int Rows = 500;
     public float TileSize = 1.0f;
 
     public bool IsRunning = false;
@@ -27,7 +27,7 @@ public class GridGenerator : MonoBehaviour
     void Update()
     {
         elapsed += Time.deltaTime;
-        if (elapsed >= 5f)
+        if (elapsed >= 15.0f)
         {
             if (IsRunning)
             {
@@ -60,7 +60,7 @@ public class GridGenerator : MonoBehaviour
     private void CreateGridTiles(int x, int y, float value)
     {
         GameObject currentObject = new GameObject("x: " + x + " y: " + y);
-        currentObject.transform.position = new Vector3(x - TileSize/2, y - TileSize/2);
+        currentObject.transform.position = new Vector3(x, y);
         var spriteRenderer = currentObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
         spriteRenderer.color = new Color(value, value, value);
