@@ -15,7 +15,7 @@ public class AntBehavior : MonoBehaviour
 
     void Start()
     {
-        mouseControl = true;
+        mouseControl = false;
         viewCamera = Camera.main;
 
         //Fetch the Rigidbody component you attach from your GameObject
@@ -42,7 +42,7 @@ public class AntBehavior : MonoBehaviour
     {
         if (!mouseControl)
         {
-            MoveForward();
+            //MoveForward();
         }
         else
         {
@@ -64,5 +64,4 @@ public class AntBehavior : MonoBehaviour
     {
         transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * turnSpeed, Space.World);
     }
-
 }

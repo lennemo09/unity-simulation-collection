@@ -22,11 +22,14 @@ public class FieldOfView : MonoBehaviour
     public int edgeResolveIterations;
     public float edgeDistanceThreshold;
 
+    public float turnToTargetSpeed;
+
     public void Start()
     {
         viewRadius = 10.0f;
         viewAngle = 90.0f;
         getTargetsDelay = 0.2f;
+        turnToTargetSpeed = 3.5f;
 
         edgeDistanceThreshold = 0.5f;
 
@@ -52,6 +55,10 @@ public class FieldOfView : MonoBehaviour
         // Using LateUpdate so that the FieldOfView is only drawn after character has finished rotating
         // to avoid jittery FOV.
         DrawFieldOfView();
+        if (visibleTargets.Count > 0)
+        {
+            turnsToward(visibleTargets[0]);
+        }
     }
 
     private void DrawFieldOfView()
@@ -175,7 +182,7 @@ public class FieldOfView : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-    void GetTargetsInRadius()
+    private void GetTargetsInRadius()
     {
         // Wipes targets array for every search
         visibleTargets.Clear();
@@ -202,6 +209,13 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void turnsToward(Transform target)
+    {
+        Vector3 direction = target.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * turnToTargetSpeed);
     }
 
     public struct ViewCastInfo
